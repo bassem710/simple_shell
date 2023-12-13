@@ -37,13 +37,13 @@ int unsetAlias(info_t *info, char *str)
 }
 
 /**
- * set_alias - sets alias to string
+ * setAlias - sets alias to string
  * @info: parameter struct
  * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int set_alias(info_t *info, char *str)
+int setAlias(info_t *info, char *str)
 {
 	char *p;
 
@@ -106,7 +106,7 @@ int _myAlias(info_t *info)
 	{
 		p = _strchr(info->argv[i], '=');
 		if (p)
-			set_alias(info, info->argv[i]);
+			setAlias(info, info->argv[i]);
 		else
 			showAlias(node_starts_with(info->alias, info->argv[i], '='));
 	}
