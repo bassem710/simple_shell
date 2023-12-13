@@ -18,23 +18,24 @@
 #define BUF_FLUSH -1
 
 /* for command chaining */
-#define CMD_NORM 0
-#define CMD_OR 1
-#define CMD_AND 2
-#define CMD_CHAIN 3
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
 
 /* for convert_number() */
-#define CONVERT_LOWERCASE 1
-#define CONVERT_UNSIGNED 2
+#define CONVERT_LOWERCASE	1
+#define CONVERT_UNSIGNED	2
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 #define USE_STRTOK 0
 
-#define HIST_FILE ".simple_shell_history"
-#define HIST_MAX 4096
+#define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	4096
 
 extern char **environ;
+
 
 /**
  * struct liststr - singly linked list
@@ -88,17 +89,15 @@ typedef struct passinfo
 	int env_changed;
 	int status;
 
-	char **cmd_buf;	  /* pointer to cmd ; chain buffer, for memory mangement */
+	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 	int histcount;
 } info_t;
 
-#define INFO_INIT                                                               \
-	{                                                                           \
-		NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-			0, 0, 0                                                             \
-	}
+#define INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -110,6 +109,7 @@ typedef struct builtin
 	char *type;
 	int (*func)(info_t *);
 } builtin_table;
+
 
 /* toem_shloop.c */
 int hsh(info_t *, char **);
@@ -162,7 +162,7 @@ int bfree(void **);
 
 /* toem_strToInt.c */
 int inter(info_t *);
-int isDelimetered(char, char *);
+int delimetered(char, char *);
 int _isAlphabetic(int);
 int _strToInt(char *);
 
@@ -179,11 +179,13 @@ int _changeDir(info_t *);
 int _helpMe(info_t *);
 
 /* toem_builtin1.c */
-int _myHist(info_t *);
-int _myAlias(info_t *);
+int _hist(info_t *);
+int _aliasMe(info_t *);
 
 /*toem_getline.c */
 ssize_t get_input(info_t *);
+int _getline(info_t *, char **, size_t *);
+void sigintHandler(int);
 
 /* toem_getinfo.c */
 void clear_info(info_t *);
@@ -191,13 +193,13 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* toem_environ.c */
-char *_getEnvValue(info_t *, const char *);
-int _printMyEnv(info_t *);
+char *_getMyEnv(info_t *, const char *);
+int _myEnvironment(info_t *);
 int _setMyEnv(info_t *);
-int _rvEnv(info_t *);
-int populEnv(info_t *);
+int _unsetMyEnv(info_t *);
+int _popEnvList(info_t *);
 
-/* toem_getEnvValue.c */
+/* toem_getMyEnv.c */
 char **get_environ(info_t *);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
@@ -228,5 +230,6 @@ int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
 int replace_vars(info_t *);
+int replace_string(char **, char *);
 
 #endif

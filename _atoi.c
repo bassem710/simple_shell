@@ -12,12 +12,12 @@ int inter(info_t *info)
 }
 
 /**
- * isDelimetered - checks if character is a delimeter
+ * delimetered - checks if character is a delimeter
  * @c: the char to check
  * @delim: the delimeter string
  * Return: 1 if true, 0 if false
  */
-int isDelimetered(char c, char *delim)
+int delimetered(char c, char *delim)
 {
 	while (*delim)
 		if (*delim++ == c)

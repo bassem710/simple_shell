@@ -57,14 +57,15 @@ int find_builtin(info_t *info)
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
 		{"exit", _exitMe},
-		{"env", _printMyEnv},
+		{"env", _myEnvironment},
 		{"help", _helpMe},
-		{"history", _myHist},
+		{"history", _hist},
 		{"setenv", _setMyEnv},
-		{"unsetenv", _rvEnv},
+		{"unsetenv", _unsetMyEnv},
 		{"cd", _changeDir},
-		{"alias", _myAlias},
-		{NULL, NULL}};
+		{"alias", _aliasMe},
+		{NULL, NULL}
+	};
 
 	for (i = 0; builtintbl[i].type; i++)
 		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
@@ -94,12 +95,12 @@ void find_cmd(info_t *info)
 		info->linecount_flag = 0;
 	}
 	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!isDelimetered(info->arg[i], " \t\n"))
+		if (!delimetered(info->arg[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
 
-	path = find_path(info, _getEnvValue(info, "PATH="), info->argv[0]);
+	path = find_path(info, _getMyEnv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
@@ -107,7 +108,8 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-		if ((inter(info) || _getEnvValue(info, "PATH=") || info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+		if ((inter(info) || _getMyEnv(info, "PATH=")
+			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{

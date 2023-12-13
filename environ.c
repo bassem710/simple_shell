@@ -1,25 +1,25 @@
 #include "shell.h"
 
 /**
- * _printMyEnv - prints the current environment
+ * _myEnvironment - prints the current environment
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
-int _printMyEnv(info_t *info)
+int _myEnvironment(info_t *info)
 {
 	print_list_str(info->env);
 	return (0);
 }
 
 /**
- * _getEnvValue - gets the value of an environ variable
+ * _getMyEnv - gets the value of an environ variable
  * @info: Structure containing potential arguments. Used to maintain
  * @name: env var name
  *
  * Return: the value
  */
-char *_getEnvValue(info_t *info, const char *name)
+char *_getMyEnv(info_t *info, const char *name)
 {
 	list_t *node = info->env;
 	char *p;
@@ -54,12 +54,12 @@ int _setMyEnv(info_t *info)
 }
 
 /**
- * _rvEnv - Remove an environment variable
+ * _unsetMyEnv - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
-int _rvEnv(info_t *info)
+int _unsetMyEnv(info_t *info)
 {
 	int i;
 
@@ -75,12 +75,12 @@ int _rvEnv(info_t *info)
 }
 
 /**
- * populEnv - populates env linked list
+ * _popEnvList - populates env linked list
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
-int populEnv(info_t *info)
+int _popEnvList(info_t *info)
 {
 	list_t *node = NULL;
 	size_t i;
